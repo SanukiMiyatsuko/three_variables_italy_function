@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/three_variables_italy_function/static/css/main.f3b01074.css",
-    "main.js": "/three_variables_italy_function/static/js/main.7093f769.js",
+    "main.js": "/three_variables_italy_function/static/js/main.e08bac76.js",
     "static/media/KaTeX_AMS-Regular.ttf": "/three_variables_italy_function/static/media/KaTeX_AMS-Regular.853be92419a6c3766b9a.ttf",
     "static/media/KaTeX_Main-Regular.ttf": "/three_variables_italy_function/static/media/KaTeX_Main-Regular.9eba1d77abcf2aa6e94e.ttf",
     "static/media/KaTeX_Main-Bold.ttf": "/three_variables_italy_function/static/media/KaTeX_Main-Bold.8169508bf58f8bd92ad8.ttf",
@@ -64,10 +64,10 @@
     "static/media/KaTeX_Size3-Regular.woff2": "/three_variables_italy_function/static/media/KaTeX_Size3-Regular.e1951519f6f0596f7356.woff2",
     "index.html": "/three_variables_italy_function/index.html",
     "main.f3b01074.css.map": "/three_variables_italy_function/static/css/main.f3b01074.css.map",
-    "main.7093f769.js.map": "/three_variables_italy_function/static/js/main.7093f769.js.map"
+    "main.e08bac76.js.map": "/three_variables_italy_function/static/js/main.e08bac76.js.map"
   },
   "entrypoints": [
     "static/css/main.f3b01074.css",
-    "static/js/main.7093f769.js"
+    "static/js/main.e08bac76.js"
   ]
 }
