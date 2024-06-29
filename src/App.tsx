@@ -22,6 +22,9 @@ type Options = {
   showHide: boolean;
 };
 
+export const headname: string = "伊";
+export const headnamereplace: string = "い";
+
 function App() {
   const [inputstrA, setInputA] = useState("");
   const [inputstrB, setInputB] = useState("");
@@ -90,9 +93,6 @@ function App() {
     }));
   };
 
-  const headname = "伊";
-  const headnamereplace = `\"い\"`;
-
   return (
     <div className="Appb">
       <h1 className="App">3変数伊関数計算機</h1>
@@ -101,7 +101,7 @@ function App() {
         a=0の時は{headname}(b,c), {headname}_&#123;b&#125;(c)、a=0かつb=0の時は{headname}(c)としても大丈夫です。<br />
         _, &#123;, &#125;は省略可能です。<br />
         略記として、1 := {headname}(0,0,0), n := 1 + 1 + ...(n個の1)... + 1, ω := {headname}(0,0,1), Ω := {headname}(0,1,0), I := {headname}(1,0,0)が使用可能。<br />
-        また、{headname}は{headnamereplace}で、ωはwで、ΩはWで、Iはiで代用可能。
+        また、{headname}は"{headnamereplace}"で、ωはwで、ΩはWで、Iはiで代用可能。
       </p>
       <div className="block">
         A:

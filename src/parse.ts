@@ -1,4 +1,5 @@
-import { AT, PT, T, Z, ONE, LOMEGA, OMEGA, sanitize_plus_term, Goal, IOTA } from "./code";
+import { headname, headnamereplace } from "./App";
+import { AT, PT, T, Z, ONE, LOMEGA, OMEGA, sanitize_plus_term, psi, IOTA } from "./code";
 
 function from_nat(num: number): PT | AT {
     let numterm: PT[] = [];
@@ -120,12 +121,12 @@ export class Scanner {
         } else if (this.consume("i") || this.consume("I")) {
             return IOTA;
         } else {
-            this.expect2("伊", "い");
+            this.expect2(headname, headnamereplace);
             this.consume("_"); // optional "_"
             let argarr: T[] = [];
             if (this.consume("(")) {
                 const term = this.parse_term();
-                if (this.consume(")")) return Goal([Z, Z, term]);
+                if (this.consume(")")) return psi([Z, Z, term]);
                 argarr.push(term);
                 this.expect(",");
             } else if (this.consume("{")) {
@@ -139,13 +140,13 @@ export class Scanner {
                 this.expect("(");
             }
             let term = this.parse_term();
-            if (this.consume(")")) return Goal([Z, argarr[0], term]);
+            if (this.consume(")")) return psi([Z, argarr[0], term]);
             argarr.push(term);
             this.expect(",");
             term = this.parse_term();
             argarr.push(term);
             this.expect(")");
-            return Goal(argarr);
+            return psi(argarr);
         }
     }
 }
