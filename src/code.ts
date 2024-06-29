@@ -109,33 +109,28 @@ export function dom(s: T): ZT | PT {
             const b = s.arr[1];
             const domb = dom(b);
             if (domb.type === "zero") {
-                const doma = dom(s.arr[0]);
+                const a = s.arr[0];
+                const doma = dom(a);
                 if (doma.type === "zero" || equal(doma, ONE)) {
                     return s;
                 } else {
-                    return doma;
+                    return OMEGA;
                 }
             } else if (equal(domb, ONE)) {
                 return s;
             } else if (equal(domb, OMEGA)) {
                 return OMEGA;
             } else {
-                if (domb.arr[2].type !== "zero") {
-                    return domb;
-                } else {
+                const f = domb.arr[2]
+                if (dom(f).type === "zero") {
                     const e = domb.arr[1];
-                    const dome = dom(e);
-                    if (dome.type === "zero") {
+                    if (dom(e).type === "zero") {
                         return s;
-                    } else if (equal(dome, ONE)) {
-                        return domb;
                     } else {
-                        if (less_than(b, e)) {
-                            return OMEGA;
-                        } else {
-                            return domb;
-                        }
+                        return OMEGA;
                     }
+                } else {
+                    return OMEGA
                 }
             }
         } else if (equal(domc, ONE)) {
@@ -145,18 +140,14 @@ export function dom(s: T): ZT | PT {
         } else {
             const f = domc.arr[2];
             if (dom(f).type === "zero") {
-                const dome = dom(domc.arr[1]);
-                if (equal(dome, ONE)) {
+                const e = domc.arr[1];
+                if (equal(dom(e), ONE)) {
                     return s;
                 } else {
                     return OMEGA;
                 }
             } else {
-                if (less_than(c, f)) {
-                    return OMEGA;
-                } else {
-                    return domc;
-                }
+                return OMEGA;
             }
         }
     }
@@ -210,48 +201,98 @@ export function fund(s: T, t: T): T {
                 const doma = dom(a);
                 if (doma.type === "zero" || equal(doma, ONE)) {
                     return t;
-                } else {
+                } else if (equal(doma, OMEGA)) {
                     return psi([fund(a, t), b, c]);
+                } else {
+                    const d = doma.arr[0];
+                    const e = doma.arr[1];
+                    const f = doma.arr[2];
+                    const domf = dom(f);
+                    if (domf.type === "zero") {
+                        const dome = dom(e);
+                        if (dome.type === "zero") {
+                            if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                                const p = fund(s, fund(t, Z));
+                                if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                                const Gamma = p.arr[0];
+                                return psi([fund(a, psi([fund(d, Z), Gamma, Z])), b, c]);
+                            } else {
+                                return psi([fund(a, psi([fund(d, Z), Z, Z])), b, c]);
+                            }
+                        } else if (equal(dome, ONE)) {
+                            if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                                const p = fund(s, fund(t, Z));
+                                if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                                const Gamma = p.arr[0];
+                                return psi([fund(a, psi([d, fund(e, Z), Gamma])), b, c]);
+                            } else {
+                                return psi([fund(a, psi([d, fund(e, Z), Z])), b, c]);
+                            }
+                        } else {
+                            const g = dome.arr[0];
+                            if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                                const p = fund(s, fund(t, Z));
+                                if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                                const Gamma = p.arr[0];
+                                return psi([fund(a, replace(0, find(0, Gamma, d), fund(g, Z))), b, c]);
+                            } else {
+                                return psi([fund(a, Z), b, c]);
+                            }
+                        }
+                    } else {
+                        const h = domf.arr[1];
+                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                            const p = fund(s, fund(t, Z));
+                            if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                            const Gamma = p.arr[0];
+                            return psi([fund(a, replace(1, find(1, Gamma, e), fund(h, Z))), b, c]);
+                        } else {
+                            return psi([fund(a, Z), b, c]);
+                        }
+                    }
                 }
             } else if (equal(domb, ONE)) {
                 return t;
             } else if (equal(domb, OMEGA)) {
                 return psi([a, fund(b, t), c]);
             } else {
+                const e = domb.arr[1];
                 const f = domb.arr[2];
-                if (dom(f).type !== "zero") {
-                    return psi([a, fund(b, t), c]);
-                } else {
-                    const e = domb.arr[1];
+                const domf = dom(f);
+                if (domf.type === "zero") {
+                    const d = domb.arr[0];
                     const dome = dom(e);
-                    if (dome.type === "zero" || equal(dome, ONE)) {
+                    if (dome.type === "zero") {
                         return psi([a, fund(b, t), c]);
-                    } else {
-                        if (less_than(e, b) || equal(e, b)) {
-                            return psi([a, fund(b, t), c]);
+                    } else if (equal(dome, ONE)) {
+                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                            const p = fund(s, fund(t, Z));
+                            if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                            const Gamma = p.arr[1];
+                            return psi([a, fund(b, psi([d, fund(e, Z), Gamma])), c]);
                         } else {
-                            const g = dome.arr[0];
-                            if (b.type === "plus") {
-                                const i = b.add[b.add.length - 1].arr[0];
-                                if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                                    const p = fund(s, fund(t, Z));
-                                    if (p.type !== "psi") throw Error("pがPTの元ではない");
-                                    const Gamma = p.arr[1];
-                                    return psi([a, fund(b, replace(0, find(0, Gamma, i), fund(g, Z))), c]);
-                                } else {
-                                    return psi([a, fund(b, Z), c]);
-                                }
-                            } else {
-                                if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                                    const p = fund(s, fund(t, Z));
-                                    if (p.type !== "psi") throw Error("pがPTの元ではない");
-                                    const Gamma = p.arr[1];
-                                    return psi([a, fund(b, replace(0, Gamma, fund(g, Z))), c]);
-                                } else {
-                                    return psi([a, fund(b, Z), c]);
-                                }
-                            }
+                            return psi([a, fund(b, psi([d, fund(e, Z), Z])), c]);
                         }
+                    } else {
+                        const g = dome.arr[0];
+                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                            const p = fund(s, fund(t, Z));
+                            if (p.type !== "psi") throw Error("pがPTの元ではない");
+                            const Gamma = p.arr[1];
+                            return psi([a, fund(b, replace(0, find(0, Gamma, d), fund(g, Z))), c]);
+                        } else {
+                            return psi([a, fund(b, Z), c]);
+                        }
+                    }
+                } else {
+                    const h = domf.arr[0];
+                    if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                        const p = fund(s, fund(t, Z));
+                        if (p.type !== "psi") throw Error("pがPTの元ではない");
+                        const Gamma = p.arr[1];
+                        return psi([a, fund(b, replace(0, find(0, Gamma, e), fund(h, Z))), c]);
+                    } else {
+                        return psi([a, fund(b, Z), c]);
                     }
                 }
             }
@@ -264,13 +305,13 @@ export function fund(s: T, t: T): T {
         } else if (equal(domc, OMEGA)) {
             return psi([a, b, fund(c, t)]);
         } else {
+            const e = domc.arr[1];
             const f = domc.arr[2];
+            const dome = dom(e);
             const domf = dom(f);
             if (domf.type === "zero") {
-                const e = domc.arr[1];
-                const dome = dom(e);
+                const d = domc.arr[0];
                 if (dome.type === "zero") {
-                    const d = domc.arr[0];
                     if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
                         const p = fund(s, fund(t, Z));
                         if (p.type !== "psi") throw Error("pがPTの元ではないです");
@@ -287,36 +328,20 @@ export function fund(s: T, t: T): T {
                         const p = fund(s, fund(t, Z));
                         if (p.type !== "psi") throw Error("pがPTの元ではないです");
                         const Gamma = p.arr[2];
-                        return psi([a, b, fund(c, psi([fund(g, Z), Gamma, Z]))]);
+                        return psi([a, b, fund(c, replace(0, find(0, Gamma, d), fund(g, Z)))]);
                     } else {
-                        return psi([a, b, fund(c, psi([fund(g, Z), Z, Z]))]);
+                        return psi([a, b, fund(c, Z)]);
                     }
                 }
             } else {
-                if (less_than(f, c) || equal(f, c)) {
-                    return psi([a, b, fund(c, t)]);
+                const h = domf.arr[1];
+                if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
+                    const p = fund(s, fund(t, Z));
+                    if (p.type !== "psi") throw Error("pがPTの元ではないです");
+                    const Gamma = p.arr[2];
+                    return psi([a, b, fund(c, replace(1, find(1, Gamma, e), fund(h, Z)))]);
                 } else {
-                    const h = domf.arr[1];
-                    if (b.type === "plus") {
-                        const k = b.add[b.add.length - 1].arr[1];
-                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                            const p = fund(s, fund(t, Z));
-                            if (p.type !== "psi") throw Error("pがPTの元ではないです");
-                            const Gamma = p.arr[2];
-                            return psi([a, b, fund(c, replace(1, find(1, Gamma, k), fund(h, Z)))]);
-                        } else {
-                            return psi([a, b, fund(c, Z)]);
-                        }
-                    } else {
-                        if (less_than(t, OMEGA) && equal(dom(t), ONE)) {
-                            const p = fund(s, fund(t, Z));
-                            if (p.type !== "psi") throw Error("pがPTの元ではないです");
-                            const Gamma = p.arr[2];
-                            return psi([a, b, fund(c, replace(1, Gamma, fund(h, Z)))]);
-                        } else {
-                            return psi([a, b, fund(c, Z)]);
-                        }
-                    }
+                    return psi([a, b, fund(c, Z)]);
                 }
             }
         }
