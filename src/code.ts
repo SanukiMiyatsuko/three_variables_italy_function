@@ -380,26 +380,26 @@ export function abbrviate(str: string, boolArr: boolean[]): string {
     str = str.replace(RegExp(headname + "_0\\(0,0\\)", "g"), "1");
     str = str.replace(RegExp(headname + "\\(0,0,0\\)", "g"), "1");
     if (boolArr[0]) {
-        str = str.replace(RegExp(headname + "\\(1\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_\\{0\\}\\(1\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_0\\(1\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "\\(0,1\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_\\{0\\}\\(0,1\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_0\\(0,1\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "\\(0,0,1\\)", "g"), "1");
+        str = str.replace(RegExp(headname + "\\(1\\)", "g"), "ω");
+        str = str.replace(RegExp(headname + "_\\{0\\}\\(1\\)", "g"), "ω");
+        str = str.replace(RegExp(headname + "_0\\(1\\)", "g"), "ω");
+        str = str.replace(RegExp(headname + "\\(0,1\\)", "g"), "ω");
+        str = str.replace(RegExp(headname + "_\\{0\\}\\(0,1\\)", "g"), "ω");
+        str = str.replace(RegExp(headname + "_0\\(0,1\\)", "g"), "ω");
+        str = str.replace(RegExp(headname + "\\(0,0,1\\)", "g"), "ω");
     }
     if (boolArr[1]) {
-        str = str.replace(RegExp(headname + "_\\{1\\}\\(0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_1\\(0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "\\(1,0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_\\{0\\}\\(1,0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_0\\(1,0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "\\(0,1,0\\)", "g"), "1");
+        str = str.replace(RegExp(headname + "_\\{1\\}\\(0\\)", "g"), "Ω");
+        str = str.replace(RegExp(headname + "_1\\(0\\)", "g"), "Ω");
+        str = str.replace(RegExp(headname + "\\(1,0\\)", "g"), "Ω");
+        str = str.replace(RegExp(headname + "_\\{0\\}\\(1,0\\)", "g"), "Ω");
+        str = str.replace(RegExp(headname + "_0\\(1,0\\)", "g"), "Ω");
+        str = str.replace(RegExp(headname + "\\(0,1,0\\)", "g"), "Ω");
     }
     if (boolArr[2]) {
-        str = str.replace(RegExp(headname + "_\\{1\\}\\(0,0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "_1\\(0,0\\)", "g"), "1");
-        str = str.replace(RegExp(headname + "\\(1,0,0\\)", "g"), "1");
+        str = str.replace(RegExp(headname + "_\\{1\\}\\(0,0\\)", "g"), "I");
+        str = str.replace(RegExp(headname + "_1\\(0,0\\)", "g"), "I");
+        str = str.replace(RegExp(headname + "\\(1,0,0\\)", "g"), "I");
     }
     if (boolArr[8]) str = to_TeX(str);
     while (true) {
