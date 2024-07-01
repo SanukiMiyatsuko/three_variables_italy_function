@@ -199,14 +199,14 @@ function App() {
         {outputError !== "" ? (
           <div className="notification is-danger">{outputError}</div>
         ) : (
-          <p className="Appa">
+          <div className="Appa">
             <ReactMarkdown
               remarkPlugins={[remarkMath]}
               rehypePlugins={[rehypeKatex]}
             >
               {Output}
             </ReactMarkdown>
-          </p>
+          </div>
         )}
       </div>
       <p>
