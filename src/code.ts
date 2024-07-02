@@ -1,4 +1,4 @@
-import { headname } from "./App";
+import { Options, headname } from "./App";
 
 export type ZT = { readonly type: "zero" };
 export type AT = { readonly type: "plus", readonly add: PT[] };
@@ -350,53 +350,53 @@ export function fund(s: T, t: T): T {
 
 // ===========================================
 // オブジェクトから文字列へ
-export function term_to_string(t: T, boolArr: boolean[]): string {
+export function term_to_string(t: T, options: Options): string {
     if (t.type === "zero") {
         return "0";
     } else if (t.type === "psi") {
-        if (boolArr[5] && t.arr[0].type === "zero") {
-            if (!(boolArr[7] && t.arr[1].type === "zero")) {
-                if (boolArr[6]) {
-                    if (boolArr[4] || boolArr[8])
-                        return headname + "_{" + term_to_string(t.arr[1], boolArr) + "}(" + term_to_string(t.arr[2], boolArr) + ")";
+        if (options.checkOnOffC && t.arr[0].type === "zero") {
+            if (!(options.checkOnOffE && t.arr[1].type === "zero")) {
+                if (options.checkOnOffD) {
+                    if (options.checkOnOffB || options.checkOnOffT)
+                        return headname + "_{" + term_to_string(t.arr[1], options) + "}(" + term_to_string(t.arr[2], options) + ")";
                     if (t.arr[1].type === "zero") {
-                        return headname + "_0(" + term_to_string(t.arr[2], boolArr) + ")";
+                        return headname + "_0(" + term_to_string(t.arr[2], options) + ")";
                     } else if (t.arr[1].type === "plus") {
                         if (t.arr[1].add.every((x) => equal(x, ONE)))
-                            return headname + "_" + term_to_string(t.arr[1], boolArr) + "(" + term_to_string(t.arr[2], boolArr) + ")";
-                        return headname + "_{" + term_to_string(t.arr[1], boolArr) + "}(" + term_to_string(t.arr[2], boolArr) + ")";
+                            return headname + "_" + term_to_string(t.arr[1], options) + "(" + term_to_string(t.arr[2], options) + ")";
+                        return headname + "_{" + term_to_string(t.arr[1], options) + "}(" + term_to_string(t.arr[2], options) + ")";
                     } else {
-                        if (equal(t.arr[1], ONE) || (boolArr[0] && equal(t.arr[1], OMEGA)) || (boolArr[1] && equal(t.arr[1], LOMEGA)) || (boolArr[2] && equal(t.arr[1], IOTA)))
-                            return headname + "_" + term_to_string(t.arr[1], boolArr) + "(" + term_to_string(t.arr[2], boolArr) + ")";
-                        return headname + "_{" + term_to_string(t.arr[1], boolArr) + "}(" + term_to_string(t.arr[2], boolArr) + ")";
+                        if (equal(t.arr[1], ONE) || (options.checkOnOffo && equal(t.arr[1], OMEGA)) || (options.checkOnOffO && equal(t.arr[1], LOMEGA)) || (options.checkOnOffI && equal(t.arr[1], IOTA)))
+                            return headname + "_" + term_to_string(t.arr[1], options) + "(" + term_to_string(t.arr[2], options) + ")";
+                        return headname + "_{" + term_to_string(t.arr[1], options) + "}(" + term_to_string(t.arr[2], options) + ")";
                     }
                 }
-                return headname + "(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
+                return headname + "(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
             }
-            return headname + "(" + term_to_string(t.arr[2], boolArr) + ")";
+            return headname + "(" + term_to_string(t.arr[2], options) + ")";
         }
-        if (boolArr[3]) {
-            if (boolArr[4] || boolArr[8])
-                return headname + "_{" + term_to_string(t.arr[0], boolArr) + "}(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
+        if (options.checkOnOffA) {
+            if (options.checkOnOffB || options.checkOnOffT)
+                return headname + "_{" + term_to_string(t.arr[0], options) + "}(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
             if (t.arr[0].type === "zero") {
-                return headname + "_0(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
+                return headname + "_0(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
             } else if (t.arr[0].type === "plus") {
                 if (t.arr[0].add.every((x) => equal(x, ONE)))
-                    return headname + "_" + term_to_string(t.arr[0], boolArr) + "(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
-                return headname + "_{" + term_to_string(t.arr[0], boolArr) + "}(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
+                    return headname + "_" + term_to_string(t.arr[0], options) + "(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
+                return headname + "_{" + term_to_string(t.arr[0], options) + "}(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
             } else {
-                if (equal(t.arr[0], ONE) || (boolArr[0] && equal(t.arr[0], OMEGA)) || (boolArr[1] && equal(t.arr[0], LOMEGA)) || (boolArr[2] && equal(t.arr[0], IOTA)))
-                    return headname + "_" + term_to_string(t.arr[0], boolArr) + "(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
-                return headname + "_{" + term_to_string(t.arr[0], boolArr) + "}(" + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
+                if (equal(t.arr[1], ONE) || (options.checkOnOffo && equal(t.arr[1], OMEGA)) || (options.checkOnOffO && equal(t.arr[1], LOMEGA)) || (options.checkOnOffI && equal(t.arr[1], IOTA)))
+                    return headname + "_" + term_to_string(t.arr[0], options) + "(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
+                return headname + "_{" + term_to_string(t.arr[0], options) + "}(" + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
             }
         }
-        return headname + "(" + term_to_string(t.arr[0], boolArr) + "," + term_to_string(t.arr[1], boolArr) + "," + term_to_string(t.arr[2], boolArr) + ")";
+        return headname + "(" + term_to_string(t.arr[0], options) + "," + term_to_string(t.arr[1], options) + "," + term_to_string(t.arr[2], options) + ")";
     } else {
-        return t.add.map((x) => term_to_string(x, boolArr)).join("+");
+        return t.add.map((x) => term_to_string(x, options)).join("+");
     }
 }
 
-export function abbrviate(str: string, boolArr: boolean[]): string {
+export function abbrviate(str: string, options: Options): string {
     str = str.replace(RegExp(headname + "\\(0\\)", "g"), "1");
     str = str.replace(RegExp(headname + "_\\{0\\}\\(0\\)", "g"), "1");
     str = str.replace(RegExp(headname + "_0\\(0\\)", "g"), "1");
@@ -404,7 +404,7 @@ export function abbrviate(str: string, boolArr: boolean[]): string {
     str = str.replace(RegExp(headname + "_\\{0\\}\\(0,0\\)", "g"), "1");
     str = str.replace(RegExp(headname + "_0\\(0,0\\)", "g"), "1");
     str = str.replace(RegExp(headname + "\\(0,0,0\\)", "g"), "1");
-    if (boolArr[0]) {
+    if (options.checkOnOffo) {
         str = str.replace(RegExp(headname + "\\(1\\)", "g"), "ω");
         str = str.replace(RegExp(headname + "_\\{0\\}\\(1\\)", "g"), "ω");
         str = str.replace(RegExp(headname + "_0\\(1\\)", "g"), "ω");
@@ -413,7 +413,7 @@ export function abbrviate(str: string, boolArr: boolean[]): string {
         str = str.replace(RegExp(headname + "_0\\(0,1\\)", "g"), "ω");
         str = str.replace(RegExp(headname + "\\(0,0,1\\)", "g"), "ω");
     }
-    if (boolArr[1]) {
+    if (options.checkOnOffO) {
         str = str.replace(RegExp(headname + "_\\{1\\}\\(0\\)", "g"), "Ω");
         str = str.replace(RegExp(headname + "_1\\(0\\)", "g"), "Ω");
         str = str.replace(RegExp(headname + "\\(1,0\\)", "g"), "Ω");
@@ -421,12 +421,12 @@ export function abbrviate(str: string, boolArr: boolean[]): string {
         str = str.replace(RegExp(headname + "_0\\(1,0\\)", "g"), "Ω");
         str = str.replace(RegExp(headname + "\\(0,1,0\\)", "g"), "Ω");
     }
-    if (boolArr[2]) {
+    if (options.checkOnOffI) {
         str = str.replace(RegExp(headname + "_\\{1\\}\\(0,0\\)", "g"), "I");
         str = str.replace(RegExp(headname + "_1\\(0,0\\)", "g"), "I");
         str = str.replace(RegExp(headname + "\\(1,0,0\\)", "g"), "I");
     }
-    if (boolArr[8]) str = to_TeX(str);
+    if (options.checkOnOffT) str = to_TeX(str);
     while (true) {
         const numterm = str.match(/1(\+1)+/);
         if (!numterm) break;

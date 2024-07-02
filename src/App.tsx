@@ -9,7 +9,7 @@ import 'katex/dist/katex.min.css';
 
 type Operation = "fund" | "dom" | "less_than";
 
-type Options = {
+export type Options = {
   checkOnOffo: boolean;
   checkOnOffO: boolean;
   checkOnOffI: boolean;
@@ -49,17 +49,6 @@ function App() {
     try {
       const x = new Scanner(inputstrA).parse_term();
       const y = inputstrB ? new Scanner(inputstrB).parse_term() : null;
-      const checkarr = [
-        options.checkOnOffo,
-        options.checkOnOffO,
-        options.checkOnOffI,
-        options.checkOnOffA,
-        options.checkOnOffB,
-        options.checkOnOffC,
-        options.checkOnOffD,
-        options.checkOnOffE,
-        options.checkOnOffT,
-      ];
 
       let result;
       switch (operation) {
@@ -78,7 +67,7 @@ function App() {
           throw new Error("不明な操作");
       }
 
-      const outputString = abbrviate(term_to_string(result, checkarr), checkarr);
+      const outputString = abbrviate(term_to_string(result, options), options);
       setOutput(`出力：${options.checkOnOffT ? `$${outputString}$` : outputString}`);
     } catch (error) {
       if (error instanceof Error) setOutputError(error.message);
